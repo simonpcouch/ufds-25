@@ -1,0 +1,343 @@
+---
+title: ""
+format: 
+  revealjs:
+    theme: [default, custom.scss]
+    footer: '<span style="color:#aa5b31;">github.com/simonpcouch/ufds-25</span>'
+editor: source
+knitr:
+  opts_chunk: 
+    echo: true
+    collapse: true
+    comment: "#>"
+---
+
+## Using LLMs in R
+
+<a href="github.com/simonpcouch/ufds-25"><img src="figures/wall.png" align="right" height="350" alt="Hex wall" /></a>
+
+
+<br><br><br><br><br><br><br>
+_Simon Couch_ - Posit, PBC
+
+Open Source Group, R / LLMs
+
+
+```{r}
+#| message: false
+#| warning: false
+#| eval: false
+#| include: false
+remotes::install_github("luisdva/hexsession")
+library(hexsession)
+library(acquaint)
+library(btw)
+library(chores)
+library(ellmer)
+library(gander)
+library(vitals)
+library(hexsession)
+```
+
+# Part 1: Have a chat
+
+## Part 1: Have a chat
+
+Meet ellmer! <a href="https://ellmer.tidyverse.org"><img src="figures/hexes/ellmer.png" align="right" height="400" alt="ellmer website" /></a>
+
+<br>
+
+. . .
+
+::: columns
+::: {.column width="50%"}
+```{r}
+#| eval: false
+install.packages("ellmer")
+```
+:::
+::: {.column width="50%"}
+:::
+:::
+
+## Part 1: Have a chat
+
+These are the same:
+
+::: columns
+::: {.column width="50%"}
+![](figures/chats/hello.png)
+:::
+
+::: {.column width="50%"}
+<br>
+```{r}
+#| eval: false
+library(ellmer)
+
+ch <- chat_github(
+  model = "gpt-4o"
+)
+
+ch$chat("hey!")
+#> "Hey there!😊 What can I 
+#>  help you with today?"
+```
+
+:::
+:::
+
+## Part 1: Have a chat
+
+Your turn! Create a chat object and say "hey!"
+
+* `chat_github()` might "just work"
+* If not, set up `chat_anthropic()` using instructions linked below
+
+```{r 1-have-a-chat}
+#| echo: false
+countdown::countdown(minutes = 3, id = "have-a-chat")
+```
+
+<!--
+Interactively:
+* Chat a couple times
+* Extract the turns information
+-->
+
+# Part 2: The system prompt
+
+## Part 2: The system prompt
+
+* An "invisible message" at the start of your chat
+* Use it to influence behavior, define output format, etc
+
+. . .
+
+```{r}
+#| eval: false
+ch <- chat_anthropic(
+  system_prompt = 
+    "You are the literal embodiment of the town of Lewisburg, PA."
+)
+```
+
+## Part 2: The system prompt
+
+Your turn: adjust the system prompt to the model so that, when supplied a question like "What's 2+2?", the model returns _only_ the answer, no punctuation or exposition.
+
+<br>
+
+```{r}
+#| eval: false
+ch$chat("What's 2+2?")
+```
+
+```{r 2-system-prompt}
+#| echo: false
+countdown::countdown(minutes = 3, id = "system-prompt")
+```
+
+# Intermission: tokens
+
+## Intermission: tokens
+
+OpenAI and Anthropic have two main ways they make money from their models:
+
+1) Subscription plans (like chatgpt.com)
+2) API usage (like from ellmer)
+
+## Intermission: tokens
+
+API usage is "pay-as-you-go" by _token_:
+
+- Words, parts of words, or individual characters
+  - "hello" → 1 token
+  - "unconventional" → 3 tokens: `un|con|ventional`
+
+## Intermission: tokens
+
+Here's the pricing _per million tokens_ for some common models:
+
+<br>
+
+```{r, echo = FALSE}
+pricing <- 
+  tibble::tribble(
+    ~Name, ~Input, ~Output,
+    "GPT 4o", "$3.75", "$15.00",
+    "GPT 4o-mini", "$0.15", "$0.60",
+    "Claude 4 Sonnet", "$3.00", "$15.00"
+  )
+
+knitr::kable(pricing)
+```
+
+## Intermission: tokens
+
+To put that into context, the source code for these slides so far is 650 tokens.
+
+If I input them to GPT 4o:
+
+$$
+650 \text{ tokens} \times \frac{\$3.75 }{1,000,000~\text{tokens}} = \$0.00244
+$$
+
+
+
+# Part 3: Images
+
+## Part 3: Images
+
+> A picture is worth a thousand words
+
+. . .
+
+This is roughly correct! Depending on the model, pictures are \~600 tokens.
+
+## Part 3: Images
+
+These are the same:
+
+::: columns
+::: {.column width="50%"}
+![](figures/chats/fire.png)
+:::
+
+::: {.column width="50%"}
+<br>
+```{r}
+#| eval: false
+library(ellmer)
+
+ch <- chat_github(
+  model = "gpt-4o"
+)
+
+ch$chat(
+  content_image_file(
+    "figures/plots/boop.JPEG"
+  ),
+  "Is this area on fire?"
+)
+```
+:::
+:::
+
+## Part 3: Images
+
+Your turn: provide a model with an image and ask it a question about it.
+
+```{r 3-images}
+#| echo: false
+countdown::countdown(minutes = 3, id = "images")
+```
+
+# Part 4: Putting it all together
+
+## Part 4: Putting it all together
+
+Your turn: Write a function that takes a path to an image file and returns a Yes/No answer the question "Are there non-forested areas here?"
+
+```{r}
+#| eval: false
+has_non_forested <- function(path) {
+  # make a chat
+  #   - you might want to set the system prompt
+
+  # call `$chat()` with the image at `path` included
+}
+```
+
+```{r 4-together}
+#| echo: false
+countdown::countdown(minutes = 6, id = "together")
+```
+
+# Appendix A: Providers
+
+## Appendix A: Providers
+
+A "provider" is a service that hosts models on an API.
+
+In ellmer, each provider has its own `chat_*()` function, like `chat_github()` or `chat_anthropic()`
+
+. . .
+
+* `chat_github()` serves some popular models, like GPT-4o, for "free"
+    - "free" in the sense of "we're going to use all of the data you send us"
+    - heavily rate-limited; you'll need to pay for even modest usage
+
+## Appendix A: Providers
+
+* `chat_openai()` 
+    - traditionally, more consumer-focused
+    - weaker privacy guarantees 
+
+## Appendix A: Providers
+
+* `chat_anthropic()` serves Claude Sonnet
+    - traditionally more developer/enterprised-focused
+    - stronger privacy guarantees
+    - subsidizes credits via Claude for Education
+
+## Appendix A: Providers
+
+You can be your own "provider", too:
+
+* `chat_ollama()` uses a model that runs on your laptop
+    - much less powerful than the Big Ones
+    - "free" in the usual sense
+
+## Appendix A: Providers
+
+Many organizations have private deployments of models set up for internal, secure use. ellmer supports the common ones.
+
+. . .
+
+Make sure you test with models that the USFS can actually use!
+
+# Appendix B: Evaluation
+
+## Appendix B: Evaluation
+
+Does your stuff even work?  <a href="https://vitals.tidyverse.org"><img src="figures/hexes/vitals.png" align="right" height="400" alt="vitals website" /></a>
+
+ellmer has a companion package, vitals, for evaluation of products built with ellmer.
+
+## Appendix B: Evaluation
+
+At the end of the summer, you should probably be able to answer the questions:
+
+:::incremental
+* How reliably does our tool classify stuff correctly?
+* How much worse does our tool perform with a cheaper model?
+* Is this tool any better than what the USFS already uses?
+:::
+
+## Appendix B: Evaluation
+
+At the end of the summer, you should probably be able to answer the questions:
+
+* How reliably does our tool classify stuff correctly?
+* How much worse does our tool perform with a cheaper model?
+* Is this tool any better than what the USFS already uses?
+
+vitals can help you answer these sorts of questions.
+
+
+---
+
+## Learn more
+
+<br>
+
+<span style="font-size:130%">
+
+<center>[github.com/simonpcouch/ufds-25]{style="color:#c46938;"}</center>
+
+</span>
+
+<br>
+
+<a href="github.com/simonpcouch/ufds-25"><img src="figures/wall.png" align="right" height="350" alt="Hex wall" /></a>

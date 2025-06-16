@@ -1,0 +1,163 @@
+[
+  {
+    "objectID": "index.html#using-llms-in-r",
+    "href": "index.html#using-llms-in-r",
+    "title": "",
+    "section": "Using LLMs in R",
+    "text": "Using LLMs in R\n\n Simon Couch - Posit, PBC\nOpen Source Group, R / LLMs"
+  },
+  {
+    "objectID": "index.html#part-1-have-a-chat-1",
+    "href": "index.html#part-1-have-a-chat-1",
+    "title": "",
+    "section": "Part 1: Have a chat",
+    "text": "Part 1: Have a chat\nMeet ellmer! \n\n\n\n\n\ninstall.packages(\"ellmer\")"
+  },
+  {
+    "objectID": "index.html#part-1-have-a-chat-2",
+    "href": "index.html#part-1-have-a-chat-2",
+    "title": "",
+    "section": "Part 1: Have a chat",
+    "text": "Part 1: Have a chat\nThese are the same:\n\n\n\n\n\n\nlibrary(ellmer)\n\nch &lt;- chat_github(\n  model = \"gpt-4o\"\n)\n\nch$chat(\"hey!\")\n#&gt; \"Hey there!😊 What can I \n#&gt;  help you with today?\""
+  },
+  {
+    "objectID": "index.html#part-1-have-a-chat-3",
+    "href": "index.html#part-1-have-a-chat-3",
+    "title": "",
+    "section": "Part 1: Have a chat",
+    "text": "Part 1: Have a chat\nYour turn! Create a chat object and say “hey!”\n\nchat_github() might “just work”\nIf not, set up chat_anthropic() using instructions linked below\n\n\n\n\n−+\n03:00"
+  },
+  {
+    "objectID": "index.html#part-2-the-system-prompt-1",
+    "href": "index.html#part-2-the-system-prompt-1",
+    "title": "",
+    "section": "Part 2: The system prompt",
+    "text": "Part 2: The system prompt\n\nAn “invisible message” at the start of your chat\nUse it to influence behavior, define output format, etc\n\n\n\nch &lt;- chat_anthropic(\n  system_prompt = \n    \"You are the literal embodiment of the town of Lewisburg, PA.\"\n)"
+  },
+  {
+    "objectID": "index.html#part-2-the-system-prompt-2",
+    "href": "index.html#part-2-the-system-prompt-2",
+    "title": "",
+    "section": "Part 2: The system prompt",
+    "text": "Part 2: The system prompt\nYour turn: adjust the system prompt to the model so that, when supplied a question like “What’s 2+2?”, the model returns only the answer, no punctuation or exposition.\n\n\nch$chat(\"What's 2+2?\")\n\n\n\n\n−+\n03:00"
+  },
+  {
+    "objectID": "index.html#intermission-tokens-1",
+    "href": "index.html#intermission-tokens-1",
+    "title": "",
+    "section": "Intermission: tokens",
+    "text": "Intermission: tokens\nOpenAI and Anthropic have two main ways they make money from their models:\n\nSubscription plans (like chatgpt.com)\nAPI usage (like from ellmer)"
+  },
+  {
+    "objectID": "index.html#intermission-tokens-2",
+    "href": "index.html#intermission-tokens-2",
+    "title": "",
+    "section": "Intermission: tokens",
+    "text": "Intermission: tokens\nAPI usage is “pay-as-you-go” by token:\n\nWords, parts of words, or individual characters\n\n“hello” → 1 token\n“unconventional” → 3 tokens: un|con|ventional"
+  },
+  {
+    "objectID": "index.html#intermission-tokens-3",
+    "href": "index.html#intermission-tokens-3",
+    "title": "",
+    "section": "Intermission: tokens",
+    "text": "Intermission: tokens\nHere’s the pricing per million tokens for some common models:\n\n\n\n\n\n\nName\nInput\nOutput\n\n\n\n\nGPT 4o\n$3.75\n$15.00\n\n\nGPT 4o-mini\n$0.15\n$0.60\n\n\nClaude 4 Sonnet\n$3.00\n$15.00"
+  },
+  {
+    "objectID": "index.html#intermission-tokens-4",
+    "href": "index.html#intermission-tokens-4",
+    "title": "",
+    "section": "Intermission: tokens",
+    "text": "Intermission: tokens\nTo put that into context, the source code for these slides so far is 650 tokens.\nIf I input them to GPT 4o:\n\\[\n650 \\text{ tokens} \\times \\frac{\\$3.75 }{1,000,000~\\text{tokens}} = \\$0.00244\n\\]"
+  },
+  {
+    "objectID": "index.html#part-3-images-1",
+    "href": "index.html#part-3-images-1",
+    "title": "",
+    "section": "Part 3: Images",
+    "text": "Part 3: Images\n\nA picture is worth a thousand words\n\n\nThis is roughly correct! Depending on the model, pictures are ~600 tokens."
+  },
+  {
+    "objectID": "index.html#part-3-images-2",
+    "href": "index.html#part-3-images-2",
+    "title": "",
+    "section": "Part 3: Images",
+    "text": "Part 3: Images\nThese are the same:\n\n\n\n\n\n\nlibrary(ellmer)\n\nch &lt;- chat_github(\n  model = \"gpt-4o\"\n)\n\nch$chat(\n  content_image_file(\n    \"figures/plots/boop.JPEG\"\n  ),\n  \"Is this area on fire?\"\n)"
+  },
+  {
+    "objectID": "index.html#part-3-images-3",
+    "href": "index.html#part-3-images-3",
+    "title": "",
+    "section": "Part 3: Images",
+    "text": "Part 3: Images\nYour turn: provide a model with an image and ask it a question about it.\n\n\n\n−+\n03:00"
+  },
+  {
+    "objectID": "index.html#part-4-putting-it-all-together-1",
+    "href": "index.html#part-4-putting-it-all-together-1",
+    "title": "",
+    "section": "Part 4: Putting it all together",
+    "text": "Part 4: Putting it all together\nYour turn: Write a function that takes a path to an image file and returns a Yes/No answer the question “Are there non-forested areas here?”\n\nhas_non_forested &lt;- function(path) {\n  # make a chat\n  #   - you might want to set the system prompt\n\n  # call `$chat()` with the image at `path` included\n}\n\n\n\n\n−+\n06:00"
+  },
+  {
+    "objectID": "index.html#appendix-a-providers-1",
+    "href": "index.html#appendix-a-providers-1",
+    "title": "",
+    "section": "Appendix A: Providers",
+    "text": "Appendix A: Providers\nA “provider” is a service that hosts models on an API.\nIn ellmer, each provider has its own chat_*() function, like chat_github() or chat_anthropic()\n\n\nchat_github() serves some popular models, like GPT-4o, for “free”\n\n“free” in the sense of “we’re going to use all of the data you send us”\nheavily rate-limited; you’ll need to pay for even modest usage"
+  },
+  {
+    "objectID": "index.html#appendix-a-providers-2",
+    "href": "index.html#appendix-a-providers-2",
+    "title": "",
+    "section": "Appendix A: Providers",
+    "text": "Appendix A: Providers\n\nchat_openai()\n\ntraditionally, more consumer-focused\nweaker privacy guarantees"
+  },
+  {
+    "objectID": "index.html#appendix-a-providers-3",
+    "href": "index.html#appendix-a-providers-3",
+    "title": "",
+    "section": "Appendix A: Providers",
+    "text": "Appendix A: Providers\n\nchat_anthropic() serves Claude Sonnet\n\ntraditionally more developer/enterprised-focused\nstronger privacy guarantees\nsubsidizes credits via Claude for Education"
+  },
+  {
+    "objectID": "index.html#appendix-a-providers-4",
+    "href": "index.html#appendix-a-providers-4",
+    "title": "",
+    "section": "Appendix A: Providers",
+    "text": "Appendix A: Providers\nYou can be your own “provider”, too:\n\nchat_ollama() uses a model that runs on your laptop\n\nmuch less powerful than the Big Ones\n“free” in the usual sense"
+  },
+  {
+    "objectID": "index.html#appendix-a-providers-5",
+    "href": "index.html#appendix-a-providers-5",
+    "title": "",
+    "section": "Appendix A: Providers",
+    "text": "Appendix A: Providers\nMany organizations have private deployments of models set up for internal, secure use. ellmer supports the common ones.\n\nMake sure you test with models that the USFS can actually use!"
+  },
+  {
+    "objectID": "index.html#appendix-b-evaluation-1",
+    "href": "index.html#appendix-b-evaluation-1",
+    "title": "",
+    "section": "Appendix B: Evaluation",
+    "text": "Appendix B: Evaluation\nDoes your stuff even work? \nellmer has a companion package, vitals, for evaluation of products built with ellmer."
+  },
+  {
+    "objectID": "index.html#appendix-b-evaluation-2",
+    "href": "index.html#appendix-b-evaluation-2",
+    "title": "",
+    "section": "Appendix B: Evaluation",
+    "text": "Appendix B: Evaluation\nAt the end of the summer, you should probably be able to answer the questions:\n\n\nHow reliably does our tool classify stuff correctly?\nHow much worse does our tool perform with a cheaper model?\nIs this tool any better than what the USFS already uses?"
+  },
+  {
+    "objectID": "index.html#appendix-b-evaluation-3",
+    "href": "index.html#appendix-b-evaluation-3",
+    "title": "",
+    "section": "Appendix B: Evaluation",
+    "text": "Appendix B: Evaluation\nAt the end of the summer, you should probably be able to answer the questions:\n\nHow reliably does our tool classify stuff correctly?\nHow much worse does our tool perform with a cheaper model?\nIs this tool any better than what the USFS already uses?\n\nvitals can help you answer these sorts of questions."
+  },
+  {
+    "objectID": "index.html#learn-more",
+    "href": "index.html#learn-more",
+    "title": "",
+    "section": "Learn more",
+    "text": "Learn more\n\n\n\ngithub.com/simonpcouch/ufds-25"
+  }
+]
