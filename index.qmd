@@ -110,7 +110,7 @@ Interactively:
 ## Part 2: The system prompt
 
 * An "invisible message" at the start of your chat
-* Use it to influence behavior, define output format, etc
+* Use it to influence behavior, give knowledge, define output format, etc
 
 . . .
 
@@ -124,7 +124,7 @@ ch <- chat_anthropic(
 
 ## Part 2: The system prompt
 
-Your turn: adjust the system prompt to the model so that, when supplied a question like "What's 2+2?", the model returns _only_ the answer, no punctuation or exposition.
+Your turn: adjust the system prompt to the model so that, when supplied a question like "What's 2+2?", the model returns _only_ the answer as a digit, no punctuation or exposition.
 
 <br>
 

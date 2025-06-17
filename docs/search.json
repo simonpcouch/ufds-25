@@ -32,14 +32,14 @@
     "href": "index.html#part-2-the-system-prompt-1",
     "title": "",
     "section": "Part 2: The system prompt",
-    "text": "Part 2: The system prompt\n\nAn “invisible message” at the start of your chat\nUse it to influence behavior, define output format, etc\n\n\n\nch &lt;- chat_anthropic(\n  system_prompt = \n    \"You are the literal embodiment of the town of Lewisburg, PA.\"\n)"
+    "text": "Part 2: The system prompt\n\nAn “invisible message” at the start of your chat\nUse it to influence behavior, give knowledge, define output format, etc\n\n\n\nch &lt;- chat_anthropic(\n  system_prompt = \n    \"You are the literal embodiment of the town of Lewisburg, PA.\"\n)"
   },
   {
     "objectID": "index.html#part-2-the-system-prompt-2",
     "href": "index.html#part-2-the-system-prompt-2",
     "title": "",
     "section": "Part 2: The system prompt",
-    "text": "Part 2: The system prompt\nYour turn: adjust the system prompt to the model so that, when supplied a question like “What’s 2+2?”, the model returns only the answer, no punctuation or exposition.\n\n\nch$chat(\"What's 2+2?\")\n\n\n\n\n−+\n03:00"
+    "text": "Part 2: The system prompt\nYour turn: adjust the system prompt to the model so that, when supplied a question like “What’s 2+2?”, the model returns only the answer as a digit, no punctuation or exposition.\n\n\nch$chat(\"What's 2+2?\")\n\n\n\n\n−+\n03:00"
   },
   {
     "objectID": "index.html#intermission-tokens-1",
